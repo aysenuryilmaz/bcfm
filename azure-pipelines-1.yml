@@ -1,6 +1,11 @@
 # Python package
 - task: Docker@2
   inputs:
+    repository: 'x'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+- task: Docker@2
+  inputs:
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
 # Create and test a Python package on multiple Python versions.
