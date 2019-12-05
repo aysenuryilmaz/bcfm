@@ -1,37 +1,23 @@
-# Python package
-- task: Docker@2
-  inputs:
-    repository: 'x'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
-- task: Docker@2
-  inputs:
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
-# Create and test a Python package on multiple Python versions.
-# Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/python
+
+# Starter pipeline
+
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
 
 trigger:
 - master
 
 pool:
   vmImage: 'ubuntu-latest'
-strategy:
-  matrix:
-    Python27:
-      python.version: '2.7'
-    Python35:
-      python.version: '3.5'
-    Python36:
-      python.version: '3.6'
-    Python37:
-      python.version: '3.7'
 
 steps:
-- task: UsePythonVersion@0
+- task: DockerInstaller@0
   inputs:
-    versionSpec: '$(python.version)'
-  displayName: 'Use Python $(python.version)'
-
-
+    dockerVersion: '17.09.0-ce'
+- task: Docker@2
+  inputs:
+    containerRegistry: 'acr'
+    repository: 'bcfm-test'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
